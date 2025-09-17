@@ -65,7 +65,7 @@ window.addEventListener('load',function(event){
       reader.onload=function(){
         let config={
           decoder: {
-            readers: ["ean_reader","ean_8_reader"],
+            readers: ["ean_reader","ean_8_reader","codabar"],
             multiple: false, //同時に複数のバーコードを解析しない
           },
           locator:{patchSize:"large",halfSample:false},
@@ -101,6 +101,6 @@ window.addEventListener('load',function(event){
 <body>
   <p>バーコード読取り</p>
   <div><canvas id="preview"></canvas></div>
-  <p id="jan" rows="8" cols="40">スキャン結果：</p>
+  <p id="jan">スキャン結果：</p>
 </body>
 </html>
