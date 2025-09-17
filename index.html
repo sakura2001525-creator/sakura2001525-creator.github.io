@@ -65,7 +65,7 @@ window.addEventListener('load',function(event){
       reader.onload=function(){
         let config={
           decoder: {
-            readers: ["ean_reader","ean_8_reader","codabar"],
+            readers: ['ean_reader','ean_8_reader','codabar_reader'],
             multiple: false, //同時に複数のバーコードを解析しない
           },
           locator:{patchSize:"large",halfSample:false},
@@ -87,7 +87,7 @@ window.addEventListener('load',function(event){
       DetectedCount=0;
       DetectedCode=result.codeResult.code;
     }
-    if(DetectedCount>=3){
+    if(DetectedCount>=2){
       console.log(result.codeResult.code);
       jan.value+=result.codeResult.code+'\n';
       jan.scrollTop=jan.scrollHeight;
@@ -99,7 +99,7 @@ window.addEventListener('load',function(event){
 </script>
 </head>
 <body>
-  <p>バーコード読取り</p>
+  
   <div><canvas id="preview"></canvas></div>
   <textarea id="jan" rows="8" cols="40"></textarea>
 </body>
