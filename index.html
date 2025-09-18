@@ -4,11 +4,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="barcode.css">
+<title>バーコード読取り</title>
 </head>
 <body>
 <h3>バーコード</h3>
-<div id="photo-area" class="viewport"></div>
-<div id="qr-reader-results" style="font-size: 1rem;">
+<div id="scanner-container"></div>
+<div id="barcode-result" style="font-size: 1rem;">
 スキャン結果：
 </div>
 </body>
@@ -18,88 +19,55 @@
 	crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.js"></script>
 <script>
-  $(function () {
-    startScanner();
+const resultElement = document.getElementById("barcode-result");
+let lastDetectedCodes = [];
+const REQUIRED_MATCHES = 3;
+Quagga.init({
+    inputStream: {
+        type: "LiveStream",
+        constraints: {
+            width: 1280,
+            height: 720,
+            facingMode: "environment",
+        },
+		target: document.querySelector("#scanner-container"),
+	},
+	locator: {
+		patchSize: "medium",
+		halfSample: false
+	},
+	decoder:{
+		readers: [codabar_reader]
+	},
+	locate: true,
+	numOfWorkers: navigator.hndwareConcurrency || 4,
+	frequency: 5
+}, function (err){
+	if (err){
+		console.error(err);
+		resultElement.textContent = "エラー" + err;
+		return;
+	}
+	Quagga.start();
 });
 
-const startScanner = () => {
-    Quagga.init({
-        inputStream: {
-            name: "Live",
-            type: "LiveStream",
-            target: document.querySelector('#photo-area'),
-            constraints: {
-                decodeBarCodeRate: 3,
-                successTimeout: 500,
-                codeRepetition: true,
-                tryVertical: true,
-                frameRate: 15,
-                width: 640,
-                height: 480,
-                facingMode: "environment"
-            },
-        },
-        decoder: {
-            readers: [
-                "codabar_reader"
-            ]
-        },
-    }, function (err) {
-        if (err) {
-            console.log(err);
-            return
-        }
-        console.log("Initialization finished. Ready to start");
-        Quagga.start();
-        // Set flag to is running
-        _scannerIsRunning = true;
-    });
+Quagga.onDetected((data) => {
+	const code = data.codeResult.code;
+	if (!code) return;
 
-    Quagga.onProcessed(function (result) {
-        var drawingCtx = Quagga.canvas.ctx.overlay,
-            drawingCanvas = Quagga.canvas.dom.overlay;
+	lastDetectedCodes.push(code);
 
-        if (result) {
-            if (result.boxes) {
-                drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
-                result.boxes.filter(function (box) {
-                    return box !== result.box;
-                }).forEach(function (box) {
-                    Quagga.ImageDebug.drawPath(box, {
-                        x: 0,
-                        y: 1
-                    });
-                });
-            }
-
-            if (result.box) {
-                Quagga.ImageDebug.drawPath(result.box, {
-                    x: 0,
-                    y: 1
-                }, drawingCtx, {
-                    color: "#00F",
-                    lineWidth: 2
-                });
-            }
-
-            if (result.codeResult && result.codeResult.code) {
-                Quagga.ImageDebug.drawPath(result.line, {
-                    x: 'x',
-                    y: 'y'
-                }, drawingCtx, {
-                    color: 'red',
-                    lineWidth: 3
-                });
-            }
-        }
-    });
-
-    //barcode read call back
-    Quagga.onDetected(function (result) {
-        console.log(result.codeResult.code);
-		var scannedCode = result.codeResult.code;
-        document.getElementById("qr-reader-results").innerText = scannedCode;
-    });
+	if (lastDetectedCodes.length >= 3) {
+		const lastThree = lastDetectedCodes.slice(-3);
+		const allSame = lastThree.every(c => c === lastThree[0]);
+		if (allSame) {
+			resultElement.textContent = 'スキャン結果：${code}';
+			console.log("バーコード：", code);
+			Quagga.stop();
+		}
+		
+	});
+	
 }
 </script>
 </html>
