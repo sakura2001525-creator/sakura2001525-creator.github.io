@@ -1,9 +1,10 @@
 #preview {
+   aspect-ratio: 4/3;
    width: 100%;
-   max-width: 640px;
+   max-width: 100%;
    height: auto;
    margin: 0 auto;
    border: 2px solid #ccc;
-   aspect-ratio: 4/3;
+   
 }
 
