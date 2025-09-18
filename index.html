@@ -68,9 +68,6 @@ const startScanner = () => {
                     Quagga.ImageDebug.drawPath(box, {
                         x: 0,
                         y: 1
-                    }, drawingCtx, {
-                        color: "green",
-                        lineWidth: 2
                     });
                 });
             }
@@ -101,7 +98,7 @@ const startScanner = () => {
     Quagga.onDetected(function (result) {
         console.log(result.codeResult.code);
 		var scannedCode = result.codeResult.code;
-        document.getElementById("qr-reader-results").innerText += scannedCode;
+        document.getElementById("qr-reader-results").innerText = scannedCode;
     });
 }
 </script>
