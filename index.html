@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="barcode.css">
 <title>バーコード読取り</title>
+<link rel="manifest" href="./manifest.json">
 </head>
 <body>
   <div><canvas id="preview"></canvas></div>
@@ -12,6 +13,11 @@
 	<p id="jan"></p>
 </div>
 </body>
+ <script>
+    if('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./barcode.js', { scope: '/BarcodeReaderPWADemo/' });
+    }
+</script>
 <script 
 	src="https://code.jquery.com/jquery-3.6.1.min.js" 
 	integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" 
