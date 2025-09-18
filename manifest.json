@@ -1,0 +1,18 @@
+{
+    "lang": "ja-jp",
+    "name": "Barcode reader demo",
+    "short_name": "Barcode Reader Demo",
+    "description": "A Barcode reader application that can read any barcodes using camera by html5-qrcode.",
+    "scope": "/BarcodeReaderPWADemo/",
+    "start_url": "/BarcodeReaderPWADemo/barcode-pwa.html",
+    "background_color": "#2f3d58",
+    "theme_color": "#2f3d58",
+    "orientation": "any",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "./barcode-icon.png",
+            "sizes": "300x300"
+        }
+    ]
+}
