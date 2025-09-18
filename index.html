@@ -23,6 +23,18 @@ const resultElement = document.getElementById("barcode-result");
 let lastDetectedCodes = [];
 const REQUIRED_MATCHES = 3;
 Quagga.init({
+	navigator.mediaDevices.getUserMedia(
+    //マイクはオフ, カメラの設定   背面カメラを希望する 640×480を希望する
+    {"audio":false,"video":{"facingMode":"environment","width":{"ideal":640},"height":{"ideal":480}}}
+  ).then( //許可された場合
+    function(stream){
+      scanner-container.srcObject = stream;
+      //0.5秒毎にスキャンする
+      setTimeout(Scan,500,true);
+    }
+  ).catch( //許可されなかった場合
+    
+  );
     inputStream: {
         type: "LiveStream",
         constraints: {
