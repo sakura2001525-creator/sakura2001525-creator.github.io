@@ -8,6 +8,9 @@
 <body>
 <h3>バーコード</h3>
 <div id="photo-area" class="viewport"></div>
+<div id="qr-reader-results" style="font-size: 1rem;">
+スキャン結果：
+</div>
 </body>
 <script 
 	src="https://code.jquery.com/jquery-3.6.1.min.js" 
@@ -97,6 +100,8 @@ const startScanner = () => {
     //barcode read call back
     Quagga.onDetected(function (result) {
         console.log(result.codeResult.code);
+		var scannedCode = result.codeResult.code;
+        document.getElementById("qr-reader-results").innerText += scannedCode;
     });
 }
 </script>
