@@ -101,8 +101,8 @@ window.addEventListener('load',function(event){
     }
     if(DetectedCount>=3){
       console.log(result.codeResult.code);
-      jan.value+=result.codeResult.code+'\n';
-      jan.scrollTop=jan.scrollHeight;
+      jan.innerText += result.codeResult.code+'\n';
+      
       DetectedCode='';
       DetectedCount=0;
     }
