@@ -101,10 +101,11 @@ window.addEventListener('load',function(event){
     }
     if(DetectedCount>=3){
       console.log(result.codeResult.code);
-      jan.innerText += result.codeResult.code+'\n';
+      jan.innerText = result.codeResult.code+'\n';
       
       DetectedCode='';
       DetectedCount=0;
+	  Quagga.stop();
     }
   });
 });
