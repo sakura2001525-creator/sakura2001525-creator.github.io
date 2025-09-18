@@ -1,12 +1,8 @@
-#photo-area.viewport {
-   height: 240px;
-    width:320px;
+#scanner-container {
+   width: 100%;
+   max-width: 640px;
+   margin: 0 auto;
+   border: 2px solid #ccc;
+   aspect-ratio: 4/3;
 }
-#photo-area.viewport canvas, video {
-   float: left;
-    width:320px;
-   height: 240px;
-}
-#photo-area.viewport canvas.drawingBuffer, video.drawingBuffer {
-   margin-left: -320px;
-}
+
