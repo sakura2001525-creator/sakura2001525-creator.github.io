@@ -9,7 +9,8 @@
 </head>
 <body>
 <h3>バーコード読取り</h1>
-<div><canvas id="preview"></canvas>
+<div>
+	<canvas id="preview" ></canvas>
 </div>
 <p id="jan">スキャン結果：</p>
 </body>
@@ -58,8 +59,8 @@ window.addEventListener('load',function(event){
       w=video.videoWidth;
       h=video.videoHeight;
       //画面上の表示サイズ
-      prev.style.width=(w/2)+"px";
-      prev.style.height=(h/2)+"px";
+      //prev.style.width=(w/2)+"px";
+      //prev.style.height=(h/2)+"px";
       //内部のサイズ
       prev.setAttribute("width",w);
       prev.setAttribute("height",h);
